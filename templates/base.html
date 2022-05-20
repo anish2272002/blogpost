@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'diary.png' %}">
+    <!-- BootStrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+    crossorigin="anonymous">
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Diary.com</title>
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-expand-md px-2 rounded bg-dark">
+        <div class="navbar-header">
+            <a class="text-decoration-none text-white" style="font-family:'Dancing Script',cursive;font-size:35px;" alt="Logo" href="/">
+                Diary.com
+            </a>
+        </div>
+        <button class="navbar-toggler text-white" data-bs-toggle="collapse" data-bs-target="#mycollapse">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="mycollapse">
+            <div class="container">
+                <ul class="navbar-nav float-md-end" style="font-size:20px;">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link text-white" href="">Blogs</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'account:sign' %}">Sign Up</a></li>
+                    {% endif %}
+                    <li class="nav-item dropdown" style="cursor:pointer;">
+                        <button class="btn border-2 border-white w-100 nav-link text-white dropdown-toggle" data-bs-toggle="dropdown">
+                            {% if user.is_authenticated %}
+                            {{user.first_name}}
+                            &nbsp;<img src="{{user.profile.profile_pic.url}}" class="rounded" style="width:35px;height:35px;" alt="Profile">
+                            {% else %}
+                            User
+                            &nbsp;<img src="{% static 'img6Q.png' %}" class="rounded" style="width:35px;height:35px;" alt="Profile">
+                            {% endif %}
+                        </button>    
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            {% if user.is_authenticated %}
+                            <li><button class="dropdown-item">&nbsp;Logout</a></li>
+                            <li><button class="dropdown-item">&nbsp;Account</a></li>
+                            {% else %}
+                            <li><a href="{% url 'account:login' %}"><button class="dropdown-item">&nbsp;Login</button></a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block body %}
+    <!-- Content goes here -->
+    {% endblock %}
+</body>
+<!-- BootStrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+crossorigin="anonymous"></script>
+<!-- FontAwesome icons -->
+<script src="https://kit.fontawesome.com/2939ec19a4.js" crossorigin="anonymous"></script>
+<!-- Local JS -->
+<script src="{% static 'script.js' %}"></script>
+</html>

@@ -3,6 +3,6 @@ Hosted using Heroku and AWS.
 It supports account creation, authentication and deletion.
 Bloggers can create, update, delete and comment on blogs.
 
-[Website Link](https://anishblog.herokuapp.com)
+[Website Link](https://diary.herokuapp.com)
 
 ![Screenshot](image.jpg)

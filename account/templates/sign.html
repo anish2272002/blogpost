@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container p-3 bg-light" style="margin-top:90px;">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{userform.as_p}}
+            {{userprofileform.as_p}}
+            <input class="btn btn-primary" type="submit" value="Register"/>
+        </form>
+    </div>
+{% endblock %}
