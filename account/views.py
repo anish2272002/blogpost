@@ -1,12 +1,15 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import View
+from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
-from .forms import UserProfile,UserForm,UserProfileForm,LoginForm
+from .forms import User,UserProfile,UserForm,UserUpdateForm,UserProfileForm,LoginForm
 from uuid import uuid4
 from datetime import datetime
 
@@ -69,3 +72,26 @@ class LoginView(View):
             login(request,usr)
             return HttpResponseRedirect(reverse('blog:index'))
         return render(request, self.template_name, {'form': form})
+
+class LogoutView(View):
+    @method_decorator(login_required)
+    def get(self,request,*args,**kwargs):
+        logout(request)
+        return HttpResponseRedirect(reverse('blog:index'))
+
+class AccdetailView(TemplateView):
+    template_name='accdetail.html'
+    @method_decorator(login_required)
+    def get(self,request,*args,**kwargs):
+        # userprofile=get_object_or_404(UserProfile,pk=request.user)
+        userupdateform = UserUpdateForm(instance=request.user)
+        userprofileform = UserProfileForm(instance=request.user.profile)
+        return render(request,self.template_name,{'userupdateform':userupdateform,'userprofileform':userprofileform})
+    @method_decorator(login_required)
+    def post(self,request,*args,**kwargs):
+        userupdateform=UserUpdateForm(request.POST,instance=request.user)
+        userprofileform=UserProfileForm(request.POST,request.FILES,instance=request.user.profile)
+        if(userupdateform.is_valid() and userprofileform.is_valid()):
+            userupdateform.save()
+            userprofileform.save()
+        return render(request,self.template_name,{'userupdateform':userupdateform,'userprofileform':userprofileform})       

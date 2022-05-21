@@ -1,7 +1,7 @@
 from dataclasses import fields
 from django import forms
 from .models import User,UserProfile
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate
 
 class UserForm(forms.ModelForm):
     cpassword=forms.CharField(label='',widget=forms.PasswordInput(attrs={'placeholder':'Confirm Password'}))
@@ -27,6 +27,22 @@ class UserForm(forms.ModelForm):
             'email':forms.EmailInput(attrs={'placeholder':'Email'})
         }
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=('first_name','last_name','email')
+        labels={
+            'first_name':'',
+            'last_name':'',
+            'email':'',
+        }
+        widgets={
+            'first_name':forms.TextInput(attrs={'placeholder':'First Name'}),
+            'last_name':forms.TextInput(attrs={'placeholder':'Last Name'}),
+            'email':forms.EmailInput(attrs={'placeholder':'Email'})
+        }
+        
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model=UserProfile
@@ -36,7 +52,7 @@ class UserProfileForm(forms.ModelForm):
             'profile_pic':''
         }
         widgets={
-            'dob':forms.DateInput(format='%d-%m-%Y',attrs={'placeholder':'Date of Birth','type':'date'}),
+            'dob':forms.DateInput(format=('%Y-%m-%d'), attrs={'class':'form-control', 'placeholder':'Date of Birth','type': 'date'}),
             'profile_pic':forms.FileInput()
         }
 

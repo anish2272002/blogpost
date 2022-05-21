@@ -44,8 +44,8 @@
                         </button>    
                         <ul class="dropdown-menu dropdown-menu-end">
                             {% if user.is_authenticated %}
-                            <li><button class="dropdown-item">&nbsp;Logout</a></li>
-                            <li><button class="dropdown-item">&nbsp;Account</a></li>
+                            <li><a href="{% url 'account:logout' %}"><button class="dropdown-item">&nbsp;Logout</button></a></li>
+                            <li><a href="{% url 'account:accdetail' %}"><button class="dropdown-item">&nbsp;Account</button></a></li>
                             {% else %}
                             <li><a href="{% url 'account:login' %}"><button class="dropdown-item">&nbsp;Login</button></a></li>
                             {% endif %}
