@@ -1,26 +1,35 @@
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
-from django.shortcuts import render
-from django.conf import settings
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate,login,logout
+from django.shortcuts import render
+
+from django.http import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
+
+from django.conf import settings
 from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404
-from .forms import User,UserProfile,UserForm,UserUpdateForm,UserProfileForm,LoginForm
 from uuid import uuid4
 from datetime import datetime
+from django.shortcuts import get_object_or_404
 
-def token_generator(usrname):
-    t1=str(uuid4())
-    t2=str(hash(usrname))
-    t3=str(hash(str(datetime.now())))
-    return (t1+t2+t3,datetime.now())
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login,logout
 
-def signup(request):
-    if(request.method=='POST'):
+from .forms import User,UserProfile,UserForm,UserUpdateForm,UserProfileForm,LoginForm
+
+class SignupView(View):
+    template_name = 'sign.html'
+    template_name_email = 'email_token.html'
+    def token_generator(self,usrname):
+        t1=str(uuid4())
+        t2=str(hash(usrname))
+        t3=str(hash(str(datetime.now())))
+        return t1+t2+t3
+    def get(self,request,*args,**kwargs):
+        usrdata=UserForm()
+        usrprofiledata=UserProfileForm()
+        return render(request,self.template_name,{'userform':usrdata,'userprofileform':usrprofiledata})
+    def post(self,request,*args,**kwargs):
         usrdata=UserForm(request.POST)
         usrprofiledata=UserProfileForm(request.POST,request.FILES)
         if(usrdata.is_valid() and usrprofiledata.is_valid()):
@@ -30,40 +39,38 @@ def signup(request):
             user.save()
             userprofile=usrprofiledata.save(commit=False)
             userprofile.user=user
-            userprofile.token,userprofile.validatetime=token_generator(user.username)
+            userprofile.token=self.token_generator(user.username)
+            userprofile.validatetime=datetime.now()
             if(request.is_secure()):
                 token='https://'+request.get_host()+'/account/'+userprofile.token
             else:
                 token='http://'+request.get_host()+'/account/'+userprofile.token
             userprofile.save()
-            msg="Hi {}\nHere is your account confirmation link:\n".format(user.first_name)+token
+            msg="Hi {0}\nHere is your account confirmation link:\n{1}\nTeam Diary\n".format(user.first_name,token)
             send_mail("Account confirmation Mail",msg,settings.EMAIL_HOST_USER,[user.email])
-            return render(request,'email_token.html',{'email':user.email})
-    else:
-        print(request.get_host(),request.is_secure())
-        usrdata=UserForm()
-        usrprofiledata=UserProfileForm()
-    return render(request,'sign.html',{'userform':usrdata,'userprofileform':usrprofiledata})
+            return render(request,self.template_name_email,{'email':user.email})
+        else:
+            return render(request,self.template_name,{'userform':usrdata,'userprofileform':usrprofiledata})
 
-def validate(request,slug):
-    obj=get_object_or_404(UserProfile,token=slug)
-    if(obj.user.is_active):
-        return HttpResponseRedirect(reverse('account:login'))
-    elif((datetime.now()-obj.validatetime).total_seconds()<2000):
-        obj.user.is_active=True
-        obj.user.save()
-        return render(request,"validated.html",{'activated':True,'username':obj.user.username})
-    else:
-        obj.user.delete()
-        return render(request,"validated.html",{'activated':False,'username':None})
+class ValidateView(View):
+    template_name='validated.html'
+    def get(self,request,slug):
+        obj=get_object_or_404(UserProfile,token=slug)
+        if(obj.user.is_active):
+            return HttpResponseRedirect(reverse('account:login'))
+        elif((datetime.now()-obj.validatetime).total_seconds()<2000):
+            obj.user.is_active=True
+            obj.user.save()
+            return render(request,self.template_name,{'activated':True,'username':obj.user.username})
+        else:
+            obj.user.delete()
+            return render(request,self.template_name,{'activated':False,'username':None})
 
 class LoginView(View):
     form_class = LoginForm
-    # Initial data
-    initial = {}
     template_name = 'login.html'
     def get(self, request, *args, **kwargs):
-        form = self.form_class(initial=self.initial)
+        form = self.form_class()
         return render(request, self.template_name, {'form': form})
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
@@ -79,7 +86,7 @@ class LogoutView(View):
         logout(request)
         return HttpResponseRedirect(reverse('blog:index'))
 
-class AccdetailView(TemplateView):
+class AccdetailView(View):
     template_name='accdetail.html'
     @method_decorator(login_required)
     def get(self,request,*args,**kwargs):
@@ -94,4 +101,16 @@ class AccdetailView(TemplateView):
         if(userupdateform.is_valid() and userprofileform.is_valid()):
             userupdateform.save()
             userprofileform.save()
-        return render(request,self.template_name,{'userupdateform':userupdateform,'userprofileform':userprofileform})       
+        return render(request,self.template_name,{'userupdateform':userupdateform,'userprofileform':userprofileform})
+
+class DeleteUserView(View):
+    template_name='delete.html'
+    @method_decorator(login_required)
+    def get(self,request):
+        return render(request,self.template_name)
+    @method_decorator(login_required)
+    def post(self,request):
+        usr=request.user
+        logout(request)
+        usr.delete()
+        return render(request,self.template_name)

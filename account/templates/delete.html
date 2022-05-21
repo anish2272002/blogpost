@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container p-3" style="margin-top:80px;">
+        {% if user.is_authenticated %}
+        <h2>Delete Account {{user.username}}?</h2>
+        <p><form method="POST">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-danger" value="Delete"/>
+        </form></p>
+        {% else %}
+        <h2>Account deleted</h2>
+        <p><a href="{% url 'blog:index' %}"><button class="btn btn-primary">Home</button></a></p>
+        {% endif %}
+    </div>
+{% endblock %}
