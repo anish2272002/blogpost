@@ -62,7 +62,9 @@ class LoginForm(forms.Form):
     def clean(self):
         super().clean()
         usr=authenticate(username=self.cleaned_data['username'],password=self.cleaned_data['password'])
-        if(usr):
+        if(usr and usr.is_active):
             self.cleaned_data['user']=usr
         else:
-            raise forms.ValidationError("User not Found!")
+            if(usr):
+                usr.delete()
+            raise forms.ValidationError("Incorrect Username/Password")

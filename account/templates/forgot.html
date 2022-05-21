@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% if showpwdform %}
+    <form method="POST" style="margin-top:90px;">
+        {% csrf_token %}
+        <label for="pwd" class="form-label"><h3>{{txt}}</h3></label>
+        <input id="pwd" name="password" class="form-control" placeholder="Enter password" type="password"/>
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+    {% elif showusernameform %}
+    <form method="POST" style="margin-top:90px;">
+        {% csrf_token %}
+        <label for="username" class="form-label"><h3>{{txt}}</h3></label>
+        <input id="username" name="username" class="form-control" placeholder="abc@123" type="text"/>
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+    {% else %}
+    <h1 style="margin-top: 90px;">{{txt}}</h1>
+    {% endif %}
+{% endblock %}

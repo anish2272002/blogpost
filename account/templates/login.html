@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div class="container p-3" style="margin-top:80px;">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" class="btn-md btn-primary" value="Login"/>
-        </form>
+    <div class="cont text-center bg-light">
+        <div class="loginformcard py-3 px-2">
+            <h1>Login</h1>
+            <form class="m-1" style="transform:translateY(0.5rem);" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="btn-md btn-primary" value="Login"/>
+            </form>
+            <div>
+                <p>Forgot password? <a class="font-primary" href="{% url 'account:forgot' getusername=1 slug='forgot'%}">click here</a></p>
+                <p>Don't have an account? <a class="font-primary" href="{% url 'account:sign' %}">click here</a></p>
+            </div>
+        </div>
     </div>
 {% endblock %}

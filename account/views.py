@@ -114,3 +114,43 @@ class DeleteUserView(View):
         logout(request)
         usr.delete()
         return render(request,self.template_name)
+
+class ForgotPasswordView(View):
+    template_name='forgot.html'
+    def token_generator(self,usrname):
+        t1=str(uuid4())
+        t2=str(hash(usrname))
+        t3=str(hash(str(datetime.now())))
+        return t1+t2+t3
+    @method_decorator(login_required)
+    def send_email(self,request):
+        usrprofile=get_object_or_404(UserProfile,user=request.user)
+        usrprofile.token=self.token_generator(request.user.username)
+        usrprofile.validatetime=datetime.now()
+        usrprofile.save()
+        if(request.is_secure()):
+                token='https://'+request.get_host()+'/account/forgot/'+usrprofile.token
+        else:
+            token='http://'+request.get_host()+'/account/forgot/0/'+usrprofile.token
+        msg="Hi {0}\nHere is your password reset link:\n{1}\nTeam Diary\n".format(request.user.first_name,token)
+        send_mail("Password Reset Request Mail",msg,settings.EMAIL_HOST_USER,[request.user.email])
+    def get(self,request,getusername,slug):
+        if(getusername):
+            return render(request,self.template_name,{'showusernameform':True,'showpwdform':False,'txt':'Username'})    
+        else:
+            obj=get_object_or_404(UserProfile,token=slug)
+            if((datetime.now()-obj.validatetime).total_seconds()<2000):
+                return render(request,self.template_name,{'showusernameform':False,'showpwdform':True,'txt':request.user.username})
+            else:
+                return render(request,self.template_name,{'showusernameform':False,'showpwdform':False,'txt':'Link expired'})
+    def post(self,request,getusername,slug):
+        if(getusername):
+            usr=get_object_or_404(User,username=request.POST['username'])
+            login(request,usr)
+            self.send_email(request)
+            return render(request,self.template_name,{'showusernameform':False,'showpwdform':False,'txt':'An email is sent to {}'.format(request.user.email)})
+        else:
+            request.user.password=request.POST['password']
+            request.user.save()
+            logout(request)
+            return HttpResponseRedirect(reverse('account:login'))
