@@ -1,11 +1,33 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div class="container p-3" style="margin-top:80px;">
-        {% if activated %}
-        <h1>Account with username {{username}} activated.</h1>
-        {% else %}
-        <h1>Link expired</h1>
-        <h1>Account with username {{username}} deleted.</h1>
-        {% endif %}
+    <div class="cont bg-light">
+        <div class="emailformcard text-center p-3" style="background: #fff;">
+            <div class="text-left" style="border-bottom: 1px solid rgba(0, 0, 0, 0.2);">
+                <h4><a style="font-family:'Dancing Script',cursive;font-size:35px;color:rgba(0,0,0,0.6);" 
+                    alt="Logo" href="{% url 'blog:index' %}">
+                    Diary.com
+                </a></h4>
+            </div>
+            <div class="mt-2">
+                {% if activated %}
+                <h2>Thank You!</h2>
+                <p><h1 style="color:#198754;"><i class="fa-solid fa-check"></i></h1></p>
+                <p>Your Account with username <b>{{username}}</b> is activated.</p>
+                <p>Click on the <b>Login</b> button for login.</p>
+                {% else %}
+                <h2>Link Expired!</h2>
+                <p><h1 style="color:#dc3545;"><i class="fa-solid fa-xmark"></i></h1></p>
+                <p>Your Account with username <b>{{username}}</b> is deleted.</p>
+                <p>Click on the <b>Sign Up</b> button to create new account.</p>
+                {% endif %}
+            </div>
+            <div class="text-center">
+                {% if activated %}
+                <a href="{% url 'account:login' %}"><button class="btn btn-success px-5 py-1 rounded">Login</button></a>
+                {% else %}
+                <a href="{% url 'account:sign' username='abc' %}"><button class="btn btn-primary px-5 py-1 rounded">Sign Up</button></a>
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endblock %}

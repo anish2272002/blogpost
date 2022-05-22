@@ -17,7 +17,7 @@
 <body>
     <nav class="navbar fixed-top navbar-expand-md px-2 rounded bg-dark">
         <div class="navbar-header">
-            <a class="text-decoration-none text-white" style="font-family:'Dancing Script',cursive;font-size:35px;" alt="Logo" href="/">
+            <a class="text-white" style="font-family:'Dancing Script',cursive;font-size:35px;" alt="Logo" href="{% url 'blog:index' %}">
                 Diary.com
             </a>
         </div>
@@ -30,7 +30,7 @@
                     {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link text-white" href="">Blogs</a></li>
                     {% else %}
-                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'account:sign' %}">Sign Up</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'account:sign' username='abc' %}">Sign Up</a></li>
                     {% endif %}
                     <li class="nav-item dropdown" style="cursor:pointer;">
                         <button class="btn border-2 border-white w-100 nav-link text-white dropdown-toggle" data-bs-toggle="dropdown">

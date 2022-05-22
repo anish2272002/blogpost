@@ -1,15 +1,34 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div class="container p-3" style="margin-top:80px;">
-        {% if user.is_authenticated %}
-        <h2>Delete Account {{user.username}}?</h2>
-        <p><form method="POST">
-                {% csrf_token %}
-                <input type="submit" class="btn btn-danger" value="Delete"/>
-        </form></p>
-        {% else %}
-        <h2>Account deleted</h2>
-        <p><a href="{% url 'blog:index' %}"><button class="btn btn-primary">Home</button></a></p>
-        {% endif %}
+    <div class="cont bg-light">
+        <div class="emailformcard p-3" style="background: #fff;grid-template-rows:12% 78% 10%;">
+            <div style="border-bottom: 1px solid rgba(0, 0, 0, 0.2);">
+                <h4><a style="font-family:'Dancing Script',cursive;font-size:35px;color:rgba(0,0,0,0.6);" 
+                    alt="Logo" href="{% url 'blog:index' %}">
+                    Diary.com
+                </a></h4>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="mt-2">
+                <h1>Delete Account</h1>
+                <p>Deleting your account will  remove all of your information from our database. This cannot be undone.</p>
+                <h1 class="text-center" style="color:#adb5bd;font-size:3rem;"><i class="fa-solid fa-trash"></i></h1>
+                <p style="font-size:0.8rem;opacity:0.8;">To confirm this, type "<b>{{user.username}}</b>"</p>
+                <p><form method="POST" class="row">
+                    {% csrf_token %}
+                    <p class="col-8"><input type="text" class="form-control form-control-lg" name="username" placeholder="{{user.username}}"></p>
+                    <p class="col-4"><input type="submit" class="btn btn-lg btn-danger" value="Delete"></p>
+                </form></p>
+            </div>
+            <div class="text-center"><a href="{% url 'account:accdetail' %}"><button class="btn btn-primary px-5 py-1 rounded">Cancel</button></a></div>
+            {% else %}
+            <div class="mt-2">
+                <h1>Account Deleted</h1>
+                <p>The account with username <b>{{username}}</b> is deleted.</p>
+                <h1 class="text-center" style="font-size:3rem;"><i class="fa-solid fa-trash"></i></h1>
+            </div>
+            <div class="text-center"><a href="{% url 'account:sign' username='abc' %}"><button class="btn btn-primary px-5 py-1 rounded">Sign Up</button></a></div>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

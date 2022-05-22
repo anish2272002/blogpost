@@ -1,4 +1,20 @@
 {% extends 'base.html' %}
 {% block body %}
-    <h1>An email is sent to {{email}}</h1>
+    <div class="cont bg-light">
+        <div class="emailformcard p-3" style="background: #fff;">
+            <div style="border-bottom: 1px solid rgba(0, 0, 0, 0.2);">
+                <h4><a style="font-family:'Dancing Script',cursive;font-size:35px;color:rgba(0,0,0,0.6);" 
+                    alt="Logo" href="{% url 'blog:index' %}">
+                    Diary.com
+                </a></h4>
+            </div>
+            <div class="mt-2">
+                <h1>Verify your Email</h1>
+                <p>We have sent an email to <b>{{email}}</b></p>
+                <p>You need to verify your email to continue.</p>
+                <p>You can also click the <b>Resend Verification Email</b> button below to have another email sent to you.</p>
+            </div>
+            <div class="text-center"><a href="{% url 'account:sign' username=username %}"><button class="btn btn-primary px-5 py-1 rounded">Resend Verification Email</button></a></div>
+        </div>
+    </div>
 {% endblock %}

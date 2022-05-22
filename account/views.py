@@ -25,10 +25,24 @@ class SignupView(View):
         t2=str(hash(usrname))
         t3=str(hash(str(datetime.now())))
         return t1+t2+t3
-    def get(self,request,*args,**kwargs):
-        usrdata=UserForm()
-        usrprofiledata=UserProfileForm()
-        return render(request,self.template_name,{'userform':usrdata,'userprofileform':usrprofiledata})
+    def send_email(self,request,fname,dbtoken,email,*args,**kwargs):
+        if(request.is_secure()):
+            token='https://'+request.get_host()+'/account/'+dbtoken
+        else:
+            token='http://'+request.get_host()+'/account/'+dbtoken
+        msg="Hi {0}\nHere is your account confirmation link:\n{1}\nTeam Diary\n".format(fname,token)
+        send_mail("Account confirmation Mail",msg,settings.EMAIL_HOST_USER,[email])
+    def get(self,request,username,*args,**kwargs):
+        if(username=='abc'):
+            usrdata=UserForm()
+            usrprofiledata=UserProfileForm()
+            return render(request,self.template_name,{'userform':usrdata,'userprofileform':usrprofiledata})
+        else:
+            usr=get_object_or_404(User,username=username)
+            usr.profile.validatetime=datetime.now()
+            usr.save()
+            self.send_email(request,usr.first_name,usr.profile.token,usr.email)
+            return render(request,self.template_name_email,{'email':usr.email,'username':usr.username})
     def post(self,request,*args,**kwargs):
         usrdata=UserForm(request.POST)
         usrprofiledata=UserProfileForm(request.POST,request.FILES)
@@ -41,14 +55,9 @@ class SignupView(View):
             userprofile.user=user
             userprofile.token=self.token_generator(user.username)
             userprofile.validatetime=datetime.now()
-            if(request.is_secure()):
-                token='https://'+request.get_host()+'/account/'+userprofile.token
-            else:
-                token='http://'+request.get_host()+'/account/'+userprofile.token
             userprofile.save()
-            msg="Hi {0}\nHere is your account confirmation link:\n{1}\nTeam Diary\n".format(user.first_name,token)
-            send_mail("Account confirmation Mail",msg,settings.EMAIL_HOST_USER,[user.email])
-            return render(request,self.template_name_email,{'email':user.email})
+            self.send_email(request,user.first_name,userprofile.token,user.email)
+            return render(request,self.template_name_email,{'email':user.email,'username':user.username})
         else:
             return render(request,self.template_name,{'userform':usrdata,'userprofileform':usrprofiledata})
 
@@ -63,8 +72,9 @@ class ValidateView(View):
             obj.user.save()
             return render(request,self.template_name,{'activated':True,'username':obj.user.username})
         else:
+            usrname=obj.user.username
             obj.user.delete()
-            return render(request,self.template_name,{'activated':False,'username':None})
+            return render(request,self.template_name,{'activated':False,'username':usrname})
 
 class LoginView(View):
     form_class = LoginForm
@@ -110,10 +120,14 @@ class DeleteUserView(View):
         return render(request,self.template_name)
     @method_decorator(login_required)
     def post(self,request):
-        usr=request.user
-        logout(request)
-        usr.delete()
-        return render(request,self.template_name)
+        if(request.POST['username']==request.user.username):
+            usr=request.user
+            usrname=usr.username
+            logout(request)
+            usr.delete()
+            return render(request,self.template_name,{'username':usrname})
+        else:
+            return HttpResponseRedirect(reverse('account:accdetail'))
 
 class ForgotPasswordView(View):
     template_name='forgot.html'
@@ -122,35 +136,34 @@ class ForgotPasswordView(View):
         t2=str(hash(usrname))
         t3=str(hash(str(datetime.now())))
         return t1+t2+t3
-    @method_decorator(login_required)
-    def send_email(self,request):
-        usrprofile=get_object_or_404(UserProfile,user=request.user)
-        usrprofile.token=self.token_generator(request.user.username)
+    def send_email(self,request,usr):
+        usrprofile=get_object_or_404(UserProfile,user=usr)
+        usrprofile.token=self.token_generator(usr.username)
         usrprofile.validatetime=datetime.now()
         usrprofile.save()
         if(request.is_secure()):
                 token='https://'+request.get_host()+'/account/forgot/'+usrprofile.token
         else:
             token='http://'+request.get_host()+'/account/forgot/0/'+usrprofile.token
-        msg="Hi {0}\nHere is your password reset link:\n{1}\nTeam Diary\n".format(request.user.first_name,token)
-        send_mail("Password Reset Request Mail",msg,settings.EMAIL_HOST_USER,[request.user.email])
+        msg="Hi {0}\nHere is your password reset link:\n{1}\nTeam Diary\n".format(usr.first_name,token)
+        send_mail("Password Reset Request Mail",msg,settings.EMAIL_HOST_USER,[usr.email])
     def get(self,request,getusername,slug):
         if(getusername):
             return render(request,self.template_name,{'showusernameform':True,'showpwdform':False,'txt':'Username'})    
         else:
             obj=get_object_or_404(UserProfile,token=slug)
             if((datetime.now()-obj.validatetime).total_seconds()<2000):
-                return render(request,self.template_name,{'showusernameform':False,'showpwdform':True,'txt':request.user.username})
+                return render(request,self.template_name,{'showusernameform':False,'showpwdform':True,'txt':obj.user.username})
             else:
-                return render(request,self.template_name,{'showusernameform':False,'showpwdform':False,'txt':'Link expired'})
+                return render(request,self.template_name,{'showusernameform':False,'showpwdform':False,'txt':'expired</h4>'})
     def post(self,request,getusername,slug):
         if(getusername):
             usr=get_object_or_404(User,username=request.POST['username'])
-            login(request,usr)
-            self.send_email(request)
-            return render(request,self.template_name,{'showusernameform':False,'showpwdform':False,'txt':'An email is sent to {}'.format(request.user.email)})
+            self.send_email(request,usr)
+            return render(request,self.template_name,{'showusernameform':False,'showpwdform':False,'txt':usr.email})
         else:
-            request.user.password=request.POST['password']
-            request.user.save()
-            logout(request)
+            obj=get_object_or_404(UserProfile,token=slug)
+            obj.user.password=request.POST['password']
+            obj.user.set_password(obj.user.password)
+            obj.user.save()
             return HttpResponseRedirect(reverse('account:login'))

@@ -5,12 +5,20 @@
             <h1>Login</h1>
             <form class="m-1" style="transform:translateY(0.5rem);" method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" class="btn-md btn-primary" value="Login"/>
+                {{ form.non_field_errors }}
+                <div class="input-group my-3">
+                    {{ form.username }}
+                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                </div>
+                <div class="input-group my-3">
+                    {{ form.password }}
+                    <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                </div>
+                <input type="submit" class="btn px-4 btn-primary" value="Login"/>
             </form>
             <div>
                 <p>Forgot password? <a class="font-primary" href="{% url 'account:forgot' getusername=1 slug='forgot'%}">click here</a></p>
-                <p>Don't have an account? <a class="font-primary" href="{% url 'account:sign' %}">click here</a></p>
+                <p>Don't have an account? <a class="font-primary" href="{% url 'account:sign' username='abc'%}">click here</a></p>
             </div>
         </div>
     </div>
