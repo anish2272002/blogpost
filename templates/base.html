@@ -28,9 +28,13 @@
             <div class="container">
                 <ul class="navbar-nav float-md-end" style="font-size:20px;">
                     {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link text-white" href="">Blogs</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="">
+                        <button class="btn border-2 border-white text-white w-100 px-4">Blogs</button>
+                    </a></li>
                     {% else %}
-                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'account:sign' username='abc' %}">Sign Up</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'account:sign' username='abc' %}">
+                        <button class="btn border-2 border-white text-white w-100 px-4">Sign Up</button>
+                    </a></li>
                     {% endif %}
                     <li class="nav-item dropdown" style="cursor:pointer;">
                         <button class="btn border-2 border-white w-100 nav-link text-white dropdown-toggle" data-bs-toggle="dropdown">

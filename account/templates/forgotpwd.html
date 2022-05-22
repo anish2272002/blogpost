@@ -9,13 +9,15 @@
                 </a></h4>
             </div>
             <div class="mt-2">
-                {% if expired %}
-                <h1>Link Expired</h1>
-                {% else %}
-                <h1>Verify your Email</h1>
-                <p>We have sent an email to <b>{{email}}</b></p>
-                <p>You need to verify your email to continue.</p>
-                {% endif %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <label for="pwd" class="form-label"><h3>{{username}}</h3></label>
+                    <div class="input-group mb-3">
+                        <input id="pwd" name="password" class="form-control" placeholder="Enter password" type="password"/>
+                        <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Submit">
+                </form>
             </div>
             <div class="text-center"><a href="{% url 'account:login' %}"><button class="btn btn-primary px-5 py-1 rounded">Back to Login</button></a></div>
         </div>
