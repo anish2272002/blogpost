@@ -23,6 +23,39 @@ a{
     min-width: 300px;
     min-height: 400px;
 }
+.accdetailcard{
+    display:grid;
+    grid-template-rows: 30% 60% 10%;
+    height: 70vh;
+    width: 40vw;
+    background: #fff;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    min-width: 320px;
+    min-height: 500px;
+}
+#camicon{
+    display: none;
+    color:#000;
+    font-size:30px;
+    transform:translateY(-70px);
+}
+#accprofile:hover > #camicon{
+    display: block;
+}
+#accprofile img{
+    height:120px;
+    width:120px;
+    border-radius: 6rem;
+}
+.accdetailcard input{
+    border:none;
+    border-radius: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
+.accdetailcard input[type=file]{
+    display:none;
+}
 .signupformcard{
     display:grid;
     grid-template-rows: 12% 83% 5%;
