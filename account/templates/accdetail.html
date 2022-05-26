@@ -2,7 +2,7 @@
 {% block body %}
     <div class="cont bg-light">
         <div class="accdetailcard text-center">
-            <div style="background:#012030;border-radius:5px 5px 0px 0px;">
+            <div style="background:#0D0D0D;border-radius:5px 5px 0px 0px;">
                 <label id="accprofile" style="margin-top:1rem;border-radius: 6rem;" for="id_profile_pic">
                     <img src="{{user.profile.profile_pic.url}}">
                     <i id="camicon" class="fa-solid fa-camera" ></i>
@@ -12,10 +12,10 @@
                 {% csrf_token %}
                 {{userupdateform.as_p}}
                 {{userprofileform.as_p}}
-                <input type="submit" class="btn px-4 btn-primary" value="Save">
+                <input type="submit" class="btn btn-out px-4 text-white" style="background:#027373;" value="Save">
             </form>
             <div>
-                <a href="{% url 'account:delete' %}"><button class="btn btn-danger">Delete Account</button></a>
+                <a href="{% url 'account:delete' %}"><button type="button" class="btn btn-outline-danger">Delete Account</button></a>
             </div>
         </div>
     </div>

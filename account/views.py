@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 
 from django.conf import settings
+import blogpost.settings as bsettings
 from django.core.mail import send_mail
 from uuid import uuid4
 from datetime import datetime

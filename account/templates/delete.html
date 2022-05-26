@@ -20,14 +20,17 @@
                     <p class="col-4"><input type="submit" class="btn btn-md btn-danger" value="Delete"></p>
                 </form></p>
             </div>
-            <div class="text-center"><a href="{% url 'account:accdetail' %}"><button class="btn btn-primary px-5 py-1 rounded">Cancel</button></a></div>
+            <div class="text-center"><a href="{% url 'account:accdetail' %}">
+                <button type="button" class="btn btn-outline-dark px-5 py-1">Cancel</button></a></div>
             {% else %}
             <div class="mt-2">
                 <h1>Account Deleted</h1>
                 <p>The account with username <b>{{username}}</b> is deleted.</p>
                 <h1 class="text-center" style="font-size:3rem;"><i class="fa-solid fa-trash"></i></h1>
             </div>
-            <div class="text-center"><a href="{% url 'account:sign' username='abc' %}"><button class="btn btn-primary px-5 py-1 rounded">Sign Up</button></a></div>
+            <div class="text-center"><a href="{% url 'account:sign' username='abc' %}">
+                <button class="btn btn-out px-4 text-white" style="background:#027373;">Sign Up</button>
+            </a></div>
             {% endif %}
         </div>
     </div>

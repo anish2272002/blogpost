@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div class="cont" style="background:#0d6efd;">
+    <div class="cont" style="background:#F2E7DC;">
         <div class="signupformcard p-2">
             <div style="border-bottom: 1px solid rgba(0, 0, 0, 0.2);">
                 <h2>Sign Up</h2>
@@ -10,7 +10,7 @@
                 {% csrf_token %}
                 {{userform.as_p}}
                 {{userprofileform.as_p}}
-                <input class="btn btn-primary" type="submit" value="Register"/>
+                <input class="btn btn-out text-white" style="background:#027373;" type="submit" value="Register"/>
             </form>
             <div class="text-center">Already have an account? <a class="font-primary" href="{% url 'account:login' %}">click here</a></div>
         </div>

@@ -1,23 +1,7 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends "base.html" %}
 {% block body %}
-    <div class="cont">
-        <div class="row overflow-hidden" style="height:100%;width:100%;background:#038C7F;">
-            <div class="col-lg-4 land-card">
-                <span class="land-card-1"><p>Remain Inquisitive</p></span>
-                <span class="land-card-2">
-                    <p>Discover stories, thinking, and expertise from writers on any topic.</p>
-                    <p><a href="{% url 'account:sign' username='abc' %}">
-                        <button class="mt-2 btn btn-outline-dark btn-lg border-2 rounded-pill">Start reading</button>
-                    </a></p>
-                </span>
-            </div>
-            <div class="col-lg-8"><img class="img-land" src="{% static 'imgld.svg' %}"/></div>
-        </div>
-    </div>
-    <div class="container p-2">
-        <p><h4><i class="fa-solid fa-arrow-trend-up"></i>&nbsp;&nbsp;LATEST ON DIARY</h4></p>
-        {% for blog in blogs %}
+    <div class="container p-2" style="margin-top:70px;">
+        {% for blog in userblogs %}
         <div class="blog-card m-2 row">
             <div class="blog-grid col-lg-8 col-md-6 p-3">
                 <span>

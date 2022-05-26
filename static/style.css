@@ -1,14 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Lora&family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&family=Oswald&display=swap');
+::-webkit-scrollbar{
+    width:8px;
+}
+::-webkit-scrollbar-track{
+    background: whitesmoke;
+}
+::-webkit-scrollbar-thumb{
+    background: #0D0D0D;
+}
 a{
     text-decoration: none;
+}
+.dropdown-item:focus{
+    background:#027373;
+}
+.btn-out:active,.btn-out:focus{
+    outline: 3px solid #A9D9D0;
+    outline-offset: 3px;
+    box-shadow: 0px 0px 3px 3px #a9d9d086;
 }
 .cont{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 70px);
     width: 100vw;
-    margin-top: 50px;
+    margin-top: 70px;
+}
+.land-card{
+    color:#fff;
+}
+.land-card-1{
+    font-family: 'Lora', serif;
+    font-size:4rem;
+}
+.land-card-2{
+    font-family: 'Open Sans', sans-serif;
+    font-size:1.5rem;
 }
 .loginformcard{
     display:grid;
@@ -16,10 +46,10 @@ a{
     height: 50vh;
     width: 30vw;
     background: #fff;
-    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.8);
+    box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.2);
     border-radius: 5px;
-    border-top: 5px solid #0d6efd;
-    border-bottom: 5px solid #0d6efd;
+    border-top: 5px solid #027373;
+    border-bottom: 5px solid #027373;
     min-width: 300px;
     min-height: 400px;
 }
@@ -29,7 +59,7 @@ a{
     height: 70vh;
     width: 40vw;
     background: #fff;
-    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.2);
     border-radius: 5px;
     min-width: 320px;
     min-height: 500px;
@@ -62,7 +92,7 @@ a{
     height: 85vh;
     width: 50vw;
     background: #fff;
-    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.8);
+    box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.2);
     border-radius: 5px;
     min-width: 320px;
     min-height: 530px;
@@ -74,9 +104,9 @@ a{
     height: 50vh;
     width: 30vw;
     background: #fff;
-    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.8);
+    box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.2);
     border-radius: 20px;
-    min-width: 350px;
+    min-width: 320px;
     min-height: 450px;
 }
 .signupformcard ul{
@@ -93,7 +123,27 @@ a{
     color:tomato;
     margin-bottom: 0.5rem;
 }
-
+.img-land{
+    height:90vh;
+    width:auto;
+}
+.blog-card{
+    max-height: 240px;
+    background: #fff;
+}
+.blog-grid{
+    display: grid;
+    grid-template-rows: 20% 40% 30% 10%;
+    max-height: 240px;
+}
+.blog-card img{
+    max-height: 240px;
+    max-width: auto;
+    transition: transform 1s;
+}
+.blog-card img:hover{
+    transform: scale(1.08);
+}
 @media screen and (max-height:650px) {
     .signupformcard form{
         overflow-y:scroll;
@@ -101,5 +151,37 @@ a{
     }
     .signupformcard form input{
         font-size:0.8rem;
+    }
+}
+@media screen and (max-width:990px) {
+    .img-land{
+        height:auto;
+        width:72vw;
+    }
+    .blog-card{
+        max-height:480px;
+    }
+}
+@media screen and (max-width:800px) {
+    .img-land{
+        height:auto;
+        width:90vw;
+    }
+    .land-card-1{
+        font-size: 2rem;
+    }
+    .land-card-2{
+        font-size: 1rem;
+    }
+    .navbar{
+        padding-left:16px;
+    }
+}
+@media screen and (min-width:800px){
+    .navbar{
+        padding: 8px 50px;
+    }
+    .land-card{
+        padding-left: 50px;
     }
 }

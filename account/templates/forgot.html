@@ -17,7 +17,9 @@
                 <p>You need to verify your email to continue.</p>
                 {% endif %}
             </div>
-            <div class="text-center"><a href="{% url 'account:login' %}"><button class="btn btn-primary px-5 py-1 rounded">Back to Login</button></a></div>
+            <div class="text-center"><a href="{% url 'account:login' %}">
+                <button type="button" class="btn btn-outline-dark px-5 py-1">Back to Login</button>
+            </a></div>
         </div>
     </div>
 {% endblock %}

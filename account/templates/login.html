@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div class="cont text-center bg-light">
+    <div class="cont text-center" style="background:#A9D9D0;">
         <div class="loginformcard py-3 px-2">
             <h1>Login</h1>
             <form class="m-1" style="transform:translateY(0.5rem);" method="POST">
@@ -14,7 +14,7 @@
                     {{ form.password }}
                     <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
                 </div>
-                <input type="submit" class="btn px-4 btn-primary" value="Login"/>
+                <input type="submit" class="btn btn-out px-4 text-white" style="background:#027373;" value="Login"/>
             </form>
             <div>
                 <p>Forgot password? <a class="font-primary" href="{% url 'account:forgot' getusername=1 slug='forgot'%}">click here</a></p>
