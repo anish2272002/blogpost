@@ -28,8 +28,11 @@
             <div class="container">
                 <ul class="navbar-nav float-md-end" style="font-size:20px;">
                     {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'blog:userblogs' %}">
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'blog:userblogs' username=user.username %}">
                         <button class="btn border-2 btn-outline-light w-100 px-4">Blogs</button>
+                    </a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'blog:createblog' %}">
+                        <button class="btn border-2 btn-outline-light w-100 px-4">Create Blog</button>
                     </a></li>
                     {% else %}
                     <li class="nav-item"><a class="nav-link text-white" href="{% url 'account:sign' username='abc' %}">

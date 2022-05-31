@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block body %}
+    <div class="container" style="margin-top:90px;">
+        <div class="p-3 rounded" style="background:#fff;">
+            <form id="id_updateform" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+            </form>
+            <button form="id_updateform" class="btn btn-success rounded btn-out mx-2" style="background:#038C7F;" type="submit">Update</button>
+            <a href="{% url 'blog:userblogs' username=user.username %}">
+                <button class="btn btn-outline-dark rounded">Cancel</button>
+            </a>
+        </div>
+    </div>
+{% endblock %}

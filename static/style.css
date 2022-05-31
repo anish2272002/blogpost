@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Lora&family=Open+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Lato&family=Lobster&family=Lora&family=Merriweather&family=Montserrat&family=Open+Sans&family=Oswald&display=swap');
+
 ::-webkit-scrollbar{
     width:8px;
 }
@@ -12,6 +11,7 @@
 }
 a{
     text-decoration: none;
+    text-emphasis: none;
 }
 .dropdown-item:focus{
     background:#027373;
@@ -133,7 +133,7 @@ a{
 }
 .blog-grid{
     display: grid;
-    grid-template-rows: 20% 40% 30% 10%;
+    grid-template-rows: 20% 30% 38% 12%;
     max-height: 240px;
 }
 .blog-card img{
@@ -143,6 +143,23 @@ a{
 }
 .blog-card img:hover{
     transform: scale(1.08);
+}
+.comment-card{
+    display: grid;
+    height: 60px;
+    grid-template-columns: 50px auto;
+}
+.comment-card-body{
+    display:grid;
+    grid-template-rows: 40% 60%;
+}
+.border-input{
+    border:none;
+    border-radius: 0%;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+}
+.text-area-resize-disable{
+    resize:none;
 }
 @media screen and (max-height:650px) {
     .signupformcard form{
@@ -175,6 +192,9 @@ a{
     }
     .navbar{
         padding-left:16px;
+    }
+    .container .class-col-sm-9{
+        text-align: center;
     }
 }
 @media screen and (min-width:800px){

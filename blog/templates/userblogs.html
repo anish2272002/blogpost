@@ -1,8 +1,19 @@
 {% extends "base.html" %}
 {% block body %}
     <div class="container p-2" style="margin-top:70px;">
+        <span class="row">
+            <span class="col-sm-3 text-center py-2"><img class="rounded-pill" style="height:100px;width:100px;" src="{{userdetail.profile.profile_pic.url}}"/></span>
+            <span class="col-sm-9 class-col-sm-9" style="font-weight:bold;font-family: 'Lato', sans-serif;">
+                <p>{{userdetail.username}}</p>
+                <p>{{userdetail.first_name}}&nbsp;{{userdetail.last_name}}</p>
+                <p>{{userdetail.email}}</p>
+            </span>
+        </span>
+    </div>
+    <div class="container p-2">
         {% for blog in userblogs %}
-        <div class="blog-card m-2 row">
+        <a href="{% url 'blog:blog' pk=blog.id username=blog.blogger.username %}">
+        <div class="blog-card text-dark m-2 row">
             <div class="blog-grid col-lg-8 col-md-6 p-3">
                 <span>
                     <img class="rounded-pill" style="height:30px;width:30px;" src="{{blog.blogger.profile.profile_pic.url}}"/>
@@ -20,9 +31,10 @@
                 </span>
             </div>
             <div class="col-lg-4 col-md-6">
-                <img class="img-thumbnail" src="{{blog.img.url}}"/>
+                <img class="img-thumbnail" src="{{ blog.image.url }}"/>
             </div>
         </div>
+        </a>
         {% endfor %}
     </div>
 {% endblock %}

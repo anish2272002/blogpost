@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block body %}
+    <div class="container p-2" style="margin-top:70px;">
+        <a href="{% url 'blog:userblogs' username=blog.blogger.username %}">
+        <span class="row text-dark">
+            <span class="col-sm-3 text-center py-2"><img class="rounded-pill" style="height:100px;width:100px;" src="{{user.profile.profile_pic.url}}"/></span>
+            <span class="col-sm-9 class-col-sm-9" style="font-weight:bold;font-family: 'Lato', sans-serif;">
+                <p>{{blog.blogger.username}}&nbsp;&nbsp;{{blog.blogger.first_name}}&nbsp;{{blog.blogger.last_name}}</p>
+                <p>{{blog.blogger.email}}</p>
+                <p>{{blog.datetime}}</p>
+            </span>
+        </span>
+        </a>
+    </div>
+    <div class="container p-3 rounded" style="background:#fff;">
+        <h1><span style="opacity:0.6;">Delete Post</span> {{blog.title}}</h1>
+        <h1 class="text-center" style="color:#adb5bd;font-size:3rem;"><i class="fa-solid fa-trash"></i></h1>
+        <p style="font-size:0.8rem;opacity:0.8;">To confirm this, type "<b>{{blog.title}}</b>"</p>
+        <p><form method="POST" class="row">
+            {% csrf_token %}
+            <p class="col-8"><input type="text" class="form-control form-control-md" name="blog_title" placeholder="{{blog.title}}"></p>
+            <p class="col-4"><input type="submit" class="btn btn-md btn-danger" value="Delete"></p>
+        </form></p>
+        <p class="text-center">
+            <a href="{% url 'blog:userblogs' username=user.username %}">
+                <button class="btn btn-outline-dark">Cancel</button>
+            </a>
+        </p>
+    </div>
+{% endblock %}

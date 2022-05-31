@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block body %}
+    <div class="container p-2" style="margin-top:70px;">
+        <a href="{% url 'blog:userblogs' username=blog.blogger.username %}">
+        <span class="row text-dark">
+            <span class="col-sm-3 text-center py-2">
+                <img class="rounded-pill" style="height:100px;width:100px;" 
+                src="{{blog.blogger.profile.profile_pic.url}}"/>
+            </span>
+            <span class="col-sm-9 class-col-sm-9" style="font-weight:bold;font-family: 'Lato', sans-serif;">
+                <p>{{blog.blogger.username}}&nbsp;&nbsp;{{blog.blogger.first_name}}&nbsp;{{blog.blogger.last_name}}</p>
+                <p>{{blog.blogger.email}}</p>
+                <p>{{blog.datetime}}</p>
+            </span>
+        </span>
+        </a>
+    </div>
+    <div class="container p-3 rounded" style="background:#fff;">
+        <p style="font-family: 'Merriweather', serif;font-size:2.5rem;">{{blog.title}}</p>
+        <p style="font-family: 'Lora', serif;font-size:1.3rem;opacity:0.8;">{{blog.description}}</p>
+        <p class="text-center"><img class="img-fluid rounded" src="{{ blog.image.url}}"/></p>
+        <div style="font-family: 'Lato', sans-serif;font-size:1.1rem;">
+            {{blog.body|linebreaks}}
+        </div>
+        {% if blog.blogger.username == request.user.username %}
+        <div class="py-2">
+            <a href="{% url 'blog:delete' pk=blog.id %}"><button class="btn btn-danger rounded mx-2">Delete Post</button></a>
+            <a href="{% url 'blog:update' pk=blog.id %}"><button class="btn btn-warning rounded mx-2">Update Post</button></a>
+        </div>
+        {% endif %}
+    </div>
+    <div class="container p-3 rounded my-2" style="background:#fff;">
+        <p style="font-weight:bold;font-family: 'Lato', sans-serif;font-size:1.5rem;">
+            Comments
+        </p>
+        {% if user.is_authenticated %}
+        <div class="row">
+            <span class="col-1 text-end px-1">
+                <img class="rounded-pill" style="height:30px;width:30px;" src="{{user.profile.profile_pic.url}}"/>
+            </span>
+            <form method="POST" class="col-11 row">
+                {% csrf_token %}
+                <p class="col-10"><input class="form-control" type="text" name="comment" placeholder="Add a Comment"></p>
+                <p class="col-1"><input type="submit" class="d-none"></p>
+            </form>
+        </div>
+        {% endif %}
+        {% for comment in comments %}
+            <div class="comment-card my-1">
+                <span class="mx-1 pt-2"><a href="{% url 'blog:userblogs' username=comment.blogger.username %}">
+                    <img class="rounded-pill" style="height:30px;width:30px;" src="{{comment.blogger.profile.profile_pic.url}}"/>
+                </a></span>
+                <span class="comment-card-body">
+                    <span style="opacity:0.8;">{{comment.blogger.first_name}}&nbsp;{{comment.blogger.last_name}}
+                        &nbsp;&nbsp;{{comment.datetime|timesince:current_time}}</span>
+                    <span>{{comment.text}}</span>
+                    <span></span>
+                </span>
+            </div>
+        {% endfor %}
+    </div>
+    {% if otherblogs %}
+    <div class="container py-2">
+        <p style="font-weight:bold;font-family: 'Lato', sans-serif;font-size:1.5rem;">
+            More from {{blog.blogger.first_name}}&nbsp;{{blog.blogger.last_name}}
+        </p>
+        {% for blog in otherblogs %}
+        <a href="{% url 'blog:blog' pk=blog.id username=blog.blogger.username %}">
+            <div class="blog-card text-dark m-2 row">
+                <div class="blog-grid col-lg-8 col-md-6 p-3">
+                    <span>
+                        <img class="rounded-pill" style="height:30px;width:30px;" src="{{blog.blogger.profile.profile_pic.url}}"/>
+                        &nbsp;&nbsp;{{blog.blogger.username}}
+                        &nbsp;&nbsp;{{blog.blogger.first_name}}&nbsp;{{blog.blogger.last_name}}
+                    </span>
+                    <span style="font-family: 'Oswald', sans-serif;font-size:1.8rem;overflow:hidden;">
+                        {{blog.title}}
+                    </span>
+                    <span style="font-family: 'Lato', sans-serif;opacity:0.8;font-size:1.1rem;overflow:hidden;">
+                        {{blog.description}}
+                    </span>
+                    <span style="font-family: 'Montserrat', sans-serif;">
+                        {{blog.datetime}}
+                    </span>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <img class="img-thumbnail" src="{{blog.image.url}}"/>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}

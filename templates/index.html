@@ -18,7 +18,8 @@
     <div class="container p-2">
         <p><h4><i class="fa-solid fa-arrow-trend-up"></i>&nbsp;&nbsp;LATEST ON DIARY</h4></p>
         {% for blog in blogs %}
-        <div class="blog-card m-2 row">
+        <a href="{% url 'blog:blog' pk=blog.id username=blog.blogger.username %}">
+        <div class="blog-card text-dark m-2 row">
             <div class="blog-grid col-lg-8 col-md-6 p-3">
                 <span>
                     <img class="rounded-pill" style="height:30px;width:30px;" src="{{blog.blogger.profile.profile_pic.url}}"/>
@@ -36,9 +37,10 @@
                 </span>
             </div>
             <div class="col-lg-4 col-md-6">
-                <img class="img-thumbnail" src="{{blog.img.url}}"/>
+                <img class="img-thumbnail" src="{{blog.image.url}}"/>
             </div>
         </div>
+        </a>
         {% endfor %}
     </div>
 {% endblock %}
