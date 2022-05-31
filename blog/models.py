@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from PIL import Image
 
 class Blog(models.Model):
-    blogger=models.ForeignKey(User,related_name='blogs',on_delete=models.CASCADE)
+    blogger=models.ForeignKey(User,related_name='blogs',on_delete=models.CASCADE,primary_key=False)
     title=models.CharField(max_length=256)
     description=models.CharField(max_length=256)
     body=models.TextField()
