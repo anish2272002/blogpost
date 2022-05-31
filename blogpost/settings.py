@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import django_heroku
 
 from pathlib import Path
 import os
@@ -26,7 +27,7 @@ SECRET_KEY = os.environ.get("secret_key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['anishblog.herokuapp.com/']
 
 
 # Application definition
@@ -130,6 +131,17 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ['email_id']
 EMAIL_HOST_PASSWORD = os.environ['email_app_password']
 
+# AWS configuration
+AWS_ACCESS_KEY_ID = os.environ.get("aws_access_key_id")
+AWS_SECRET_ACCESS_KEY = os.environ.get("aws_secret_access_key")
+AWS_STORAGE_BUCKET_NAME = os.environ.get("aws_storage_bucket_name")
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+AWS_S3_REGION_NAME = 'ap-south-1'
+AWS_S3_ADDRESSING_STYLE = 'virtual'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
@@ -146,3 +158,4 @@ LOGIN_URL = '/account/login'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+django_heroku.settings(locals())
