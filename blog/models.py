@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from PIL import Image
 
 class Blog(models.Model):
+    id=models.BigAutoField(primary_key=True)
     blogger=models.ForeignKey(User,related_name='blogs',on_delete=models.CASCADE)
     title=models.CharField(max_length=256)
     description=models.CharField(max_length=256)
@@ -18,6 +19,7 @@ class Blog(models.Model):
         img.save(self.image.path)
 
 class Comment(models.Model):
+    id=models.BigAutoField(primary_key=True)
     blogger=models.ForeignKey(User,related_name='comments',on_delete=models.CASCADE)
     blog=models.ForeignKey(Blog,related_name='comments',on_delete=models.CASCADE)
     text=models.CharField(max_length=256)
