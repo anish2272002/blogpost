@@ -147,7 +147,7 @@ class ForgotPasswordView(View):
         usrprofile.validatetime=datetime.now()
         usrprofile.save()
         if(request.is_secure()):
-                token='https://'+request.get_host()+'/account/forgot/'+usrprofile.token
+                token='https://'+request.get_host()+'/account/forgot/0/'+usrprofile.token
         else:
             token='http://'+request.get_host()+'/account/forgot/0/'+usrprofile.token
         msg="Hi {0}\nHere is your password reset link:\n{1}\nTeam Diary\n".format(usr.first_name,token)
