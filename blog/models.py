@@ -18,6 +18,7 @@ class Blog(models.Model):
         img.save(self.image.path)
 
 class Comment(models.Model):
+    blogger=models.ForeignKey(User,related_name='comments',on_delete=models.CASCADE)
     blog=models.ForeignKey(Blog,related_name='comments',on_delete=models.CASCADE)
     text=models.CharField(max_length=256)
     datetime=models.DateTimeField()
