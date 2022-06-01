@@ -12,11 +12,11 @@ class Blog(models.Model):
     image=models.ImageField(upload_to='blogimage',default="../media/profile/img6Q.png",blank=True)
     def __str__(self):
         return "{0} {1}".format(self.blogger.username,self.title)
-    def save(self):
-        super().save()
-        img=Image.open(self.image.path)
-        img.thumbnail((1600,900))
-        img.save(self.image.path)
+    # def save(self):
+    #     super().save()
+    #     img=Image.open(self.image.path)
+    #     img.thumbnail((1600,900))
+    #     img.save(self.image.path)
 
 class Comment(models.Model):
     id=models.BigAutoField(primary_key=True)
