@@ -14,7 +14,7 @@ from .forms import CreateBlogForm
 class IndexView(ListView):
     model = Blog
     template_name = 'index.html'
-    context_object_name = 'blogs'
+    context_object_name = 'objects'
     queryset = Blog.objects.all().order_by('-datetime')[:10]
 
 class UserBlogView(ListView):

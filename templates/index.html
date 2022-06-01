@@ -17,7 +17,7 @@
     </div>
     <div class="container p-2">
         <p><h4><i class="fa-solid fa-arrow-trend-up"></i>&nbsp;&nbsp;LATEST ON DIARY</h4></p>
-        {% for blog in blogs %}
+        {% for blog in objects %}
         <a href="{% url 'blog:blog' pk=blog.id username=blog.blogger.username %}">
         <div class="blog-card text-dark m-2 row">
             <div class="blog-grid col-lg-8 col-md-6 p-3">
