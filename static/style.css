@@ -76,6 +76,9 @@ a{
 #bloglabel:hover > #camicon{
     display: block;
 }
+#id_updateform input[type=file]{
+    display:none;
+}
 #accprofile img{
     height:120px;
     width:120px;
