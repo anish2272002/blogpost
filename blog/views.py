@@ -70,7 +70,7 @@ class UpdateBlogView(View):
     @method_decorator(login_required)
     def get(self,request,pk):
         blog=get_object_or_404(Blog,id=pk)
-        return render(request,self.template_name,{'form':CreateBlogForm(instance=blog)})
+        return render(request,self.template_name,{'form':CreateBlogForm(instance=blog),'blogimgurl':blog.image.url})
     @method_decorator(login_required)
     def post(self,request,pk):
         blog=get_object_or_404(Blog,id=pk)

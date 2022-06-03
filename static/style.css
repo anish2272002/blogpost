@@ -73,6 +73,9 @@ a{
 #accprofile:hover > #camicon{
     display: block;
 }
+#bloglabel:hover > #camicon{
+    display: block;
+}
 #accprofile img{
     height:120px;
     width:120px;
