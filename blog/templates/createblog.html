@@ -2,7 +2,7 @@
 {% load static %}
 {% block body %}
     <div class="container" style="margin-top:90px;">
-        <div class="p-3 rounded" style="background:#fff;">
+        <div class="p-3 rounded text-center" style="background:#fff;">
             <label id="bloglabel" class="text-center mb-2" for="id_image">
                 <img id="blogimg" class="img-fluid rounded" alt="Input Image" src="{% static 'image404.png' %}"/>
                 <i id="camicon" class="fa-solid fa-camera" ></i>
@@ -11,10 +11,12 @@
                 {% csrf_token %}
                 {{form.as_p}}
             </form>
-            <button form="id_createform" class="btn btn-success rounded btn-out mx-2" style="background:#038C7F;" type="submit">Create</button>
-            <a href="{% url 'blog:userblogs' username=user.username %}">
-                <button class="btn btn-outline-dark rounded">Cancel</button>
-            </a>
+            <div class="text-start">
+                <button form="id_createform" class="btn btn-success rounded btn-out mx-2" style="background:#038C7F;" type="submit">Create</button>
+                <a href="{% url 'blog:userblogs' username=user.username %}">
+                    <button class="btn btn-outline-dark rounded">Cancel</button>
+                </a>
+            </div>
         </div>
     </div>
 {% endblock %}
