@@ -75,6 +75,7 @@ a{
 }
 #bloglabel:hover > #camicon{
     display: block;
+    transform:translateY(-450px);
 }
 #id_updateform input[type=file]{
     display:none;
