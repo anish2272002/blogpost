@@ -1,9 +1,8 @@
-const accfile = document.querySelector("#id_profile_pic");
 const pimg = document.querySelector("#accprofileimg");
 
-accfile.addEventListener("change",()=>{
-    console.log(this);
-    const file = this.files[0];
+document.querySelector("#id_profile_pic").addEventListener("change",()=>{
+    console.log(this.files)
+    const file = this.files[0]
     if(file){
         const reader = new FileReader();
         reader.addEventListener("load",()=>{
