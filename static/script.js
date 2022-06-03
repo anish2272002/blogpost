@@ -1,14 +1,11 @@
-const pimg = document.querySelector("#accprofileimg");
-
-document.querySelector("#id_profile_pic").addEventListener("change",()=>{
-    console.log(this.files)
-    const file = this.files[0]
-    if(file){
-        const reader = new FileReader();
-        reader.addEventListener("load",()=>{
-            console.log(this);
-            pimg.setAttribute("src",this.result);
-        })
-        reader.readAsDataURL(file);
+var loadFile = function(event){
+    var output = document.getElementById('accprofileimg');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+    URL.revokeObjectURL(output.src) // free memory
     }
-})
+};
+const imginp = document.querySelector("#id_profile_pic");
+if(imginp){
+    imginp.addEventListener("change",loadFile);
+}
