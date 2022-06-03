@@ -11,7 +11,7 @@ class Blog(models.Model):
     description=models.CharField(max_length=256)
     body=models.TextField()
     datetime=models.DateTimeField()
-    image=ThumbnailerImageField(upload_to='blogimage',resize_source=CROP_SETTINGS)
+    image=ThumbnailerImageField(upload_to='blogimage',blank=True,resize_source=CROP_SETTINGS)
     def __str__(self):
         return "{0} {1}".format(self.blogger.username,self.title)
 

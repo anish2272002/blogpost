@@ -30,9 +30,11 @@
                     {{blog.datetime}}
                 </span>
             </div>
+            {% if blog.image %}
             <div class="col-lg-4 col-md-6">
                 <img class="img-thumbnail" src="{{ blog.image.url }}"/>
             </div>
+            {% endif %}
         </div>
         </a>
         {% endfor %}

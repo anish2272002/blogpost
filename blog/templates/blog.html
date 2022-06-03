@@ -18,7 +18,9 @@
     <div class="container p-3 rounded" style="background:#fff;">
         <p style="font-family: 'Merriweather', serif;font-size:2.5rem;">{{blog.title}}</p>
         <p style="font-family: 'Lora', serif;font-size:1.3rem;opacity:0.8;">{{blog.description}}</p>
+        {% if blog.image %}
         <p class="text-center"><img class="img-fluid rounded" src="{{ blog.image.url}}"/></p>
+        {% endif %}
         <div style="font-family: 'Lato', sans-serif;font-size:1.1rem;">
             {{blog.body|linebreaks}}
         </div>
