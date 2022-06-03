@@ -9,7 +9,6 @@
                 {% else %}
                 <img id="blogimg" class="img-fluid rounded" src="{% static 'image404.png' %}">
                 {% endif %}
-                <i id="camicon" class="fa-solid fa-camera" ></i>
             </label>
             <form id="id_updateform" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}

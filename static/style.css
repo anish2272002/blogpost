@@ -73,10 +73,6 @@ a{
 #accprofile:hover > #camicon{
     display: block;
 }
-#bloglabel:hover > #camicon{
-    display: block;
-    transform:translateY(-250px);
-}
 #id_updateform input[type=file]{
     display:none;
 }

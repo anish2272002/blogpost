@@ -5,7 +5,6 @@
         <div class="p-3 rounded text-center" style="background:#fff;">
             <label id="bloglabel" class="text-center mb-2" for="id_image">
                 <img id="blogimg" class="img-fluid rounded" alt="Input Image" src="{% static 'image404.png' %}"/>
-                <i id="camicon" class="fa-solid fa-camera" ></i>
             </label>
             <form id="id_createform" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
