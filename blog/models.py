@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from PIL import Image
 from easy_thumbnails.fields import ThumbnailerImageField
 
 CROP_SETTINGS = {'size': (1600, 900), 'crop': 'smart'}
