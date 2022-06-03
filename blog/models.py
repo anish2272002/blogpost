@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from easy_thumbnails.fields import ThumbnailerImageField
+
+CROP_SETTINGS = {'size': (1600, 900), 'crop': 'smart'}
 
 class Blog(models.Model):
     id=models.BigAutoField(primary_key=True)
@@ -9,14 +12,9 @@ class Blog(models.Model):
     description=models.CharField(max_length=256)
     body=models.TextField()
     datetime=models.DateTimeField()
-    image=models.ImageField(upload_to='blogimage',default="../media/profile/img6Q.png",blank=True)
+    image=ThumbnailerImageField(upload_to='blogimage',default="../static/image404.png",blank=True,resize_source=CROP_SETTINGS)
     def __str__(self):
         return "{0} {1}".format(self.blogger.username,self.title)
-    # def save(self):
-    #     super().save()
-    #     img=Image.open(self.image.path)
-    #     img.thumbnail((1600,900))
-    #     img.save(self.image.path)
 
 class Comment(models.Model):
     id=models.BigAutoField(primary_key=True)
