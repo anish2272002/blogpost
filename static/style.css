@@ -157,7 +157,7 @@ a{
 }
 .comment-card{
     display: grid;
-    height: 60px;
+    height: 80px;
     grid-template-columns: 50px auto;
 }
 .comment-card-body{
