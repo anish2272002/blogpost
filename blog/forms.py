@@ -22,7 +22,7 @@ class CreateBlogForm(forms.ModelForm):
                 'class':'form-control border-input',
                 'placeholder':'Blog Image'}),
             'body':forms.Textarea(attrs={
-                'class':'form-control border-input text-area-resize-disable',
+                'class':'editable form-control border-input text-area-resize-disable',
                 'placeholder':'Blog Body',
                 'rows':'10'}),
         }

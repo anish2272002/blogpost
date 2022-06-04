@@ -150,6 +150,11 @@ a{
 .blog-card img:hover{
     transform: scale(1.08);
 }
+.blog-body img{
+    max-width: 88vw;
+    max-height: auto;
+    border-radius: 0.3rem;
+}
 .comment-card{
     display: grid;
     height: 60px;
@@ -166,6 +171,13 @@ a{
 }
 .text-area-resize-disable{
     resize:none;
+}
+@keyframes view {
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+.section{
+    animation: view 1s 1;
 }
 @media screen and (max-height:650px) {
     .signupformcard form{

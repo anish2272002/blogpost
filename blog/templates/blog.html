@@ -21,8 +21,8 @@
         {% if blog.image %}
         <p class="text-center"><img class="img-fluid rounded" src="{{ blog.image.url}}"/></p>
         {% endif %}
-        <div style="font-family: 'Lato', sans-serif;font-size:1.1rem;">
-            {{blog.body|linebreaks}}
+        <div class="blog-body" style="font-family: 'Lato', sans-serif;font-size:1.1rem;">
+            {{blog.body|safe|linebreaks}}
         </div>
         {% if blog.blogger.username == request.user.username %}
         <div class="py-2">

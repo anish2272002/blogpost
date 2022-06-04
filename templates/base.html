@@ -12,9 +12,37 @@
     crossorigin="anonymous">
     <!-- Local CSS -->
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <!-- Medium editor -->
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+    <link href="https://yabwe.github.io/medium-editor/bower_components/medium-editor/dist/css/themes/beagle.css" rel="stylesheet"/>
     <title>Diary.com</title>
+    <style>
+        body{background:#ECF0F1}
+        .load{
+            position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);
+            /*change these sizes to fit into your project*/
+            width:100px;
+            height:100px;
+        }
+        .load hr{opacity:1;border:0;margin:0;width:40%;height:40%;position:absolute;border-radius:50%;animation:spin 2s ease infinite}
+        .load :first-child{background:#A9D9D0;animation-delay:-1.5s}
+        .load :nth-child(2){background:#027373;animation-delay:-1s}
+        .load :nth-child(3){background:#F2E7DC;animation-delay:-0.5s}
+        .load :last-child{background:#0D0D0D}
+
+        @keyframes spin{
+        0%,100%{transform:translate(0)}
+        25%{transform:translate(160%)}
+        50%{transform:translate(160%, 160%)}
+        75%{transform:translate(0, 160%)}
+        }
+    </style>
 </head>
-<body style="overflow-x:hidden;" class="bg-light">
+<body onload="loader()" style="overflow-x:hidden;" class="bg-light">
+    <div class="load">
+        <hr/><hr/><hr/><hr/>
+    </div>
     <nav class="navbar fixed-top navbar-expand-md text-white" style="background:#0D0D0D;">
         <div class="navbar-header">
             <a class="text-white" style="font-family:'Dancing Script',cursive;font-size:35px;" alt="Logo" href="{% url 'blog:index' %}">
@@ -62,9 +90,11 @@
             </div>
         </div>
     </nav>
-    {% block body %}
-    <!-- Content goes here -->
-    {% endblock %}
+    <div class="section" style="display:none;">
+        {% block body %}
+        <!-- Content goes here -->
+        {% endblock %}
+    </div>
 </body>
 <!-- BootStrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 

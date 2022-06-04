@@ -25,3 +25,10 @@ const blogimginp = document.querySelector("#id_image");
 if(blogimginp){
     blogimginp.addEventListener("change",loadblogFile);
 }
+
+function loader(){
+    setTimeout(()=>{
+        document.querySelector(".section").style.display = "block";
+        document.querySelector(".load").style.display = "none";
+    },700);
+}

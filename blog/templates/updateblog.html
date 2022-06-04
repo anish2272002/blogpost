@@ -14,6 +14,20 @@
                 {% csrf_token %}
                 {{form.as_p}}
             </form>
+            <script>
+                var editor = new MediumEditor('.editable',{
+                    text: 'Enter Blog Body here.',
+                    toolbar: {
+                        buttons: [
+                            'bold',
+                            'italic',
+                            'h2',
+                            'h6',
+                            'anchor',
+                        ]
+                    }  
+                });
+            </script>
             <div class="text-start">
                 <button form="id_updateform" class="btn btn-success rounded btn-out mx-2" style="background:#038C7F;" type="submit">Update</button>
                 <a href="{% url 'blog:userblogs' username=user.username %}">
