@@ -139,7 +139,7 @@ a{
 }
 .blog-grid{
     display: grid;
-    grid-template-rows: 20% 30% 38% 12%;
+    grid-template-rows: 20% 25% auto 12%;
     max-height: 240px;
 }
 .blog-card img{
